@@ -34,14 +34,22 @@ end
 
 
 -- Function to make the cube look at the nearest player
-function lookAtNearestPlayer()
+local function lookAtNearestPlayer()
 	local nearestPlayer = getNearestPlayer()
 	if nearestPlayer then
 		local goal = nearestPlayer.Character.Head.Position
-		cube.CFrame = CFrame.new(cube.Position, goal)
+		local currentRotation = cube.CFrame
+		local goalRotation = CFrame.new(cube.Position, goal)
+		local lerpAmount = 0
+		while lerpAmount < 1 do
+			lerpAmount = lerpAmount + 0.1
+			cube.CFrame = currentRotation:lerp(goalRotation, lerpAmount)
+			wait()
+		end
 	end
 	return nearestPlayer
 end
+
 
 -- Function to make the cube bounce towards the nearest player
 function bounceTowardsNearestPlayer()
@@ -56,17 +64,7 @@ end
 
 -- Run the lookAtNearestPlayer and bounceTowardsNearestPlayer functions every 0.1 seconds
 while true do
-	playercount = players:GetPlayers()
-	if playercount then
-		okSoHead = lookAtNearestPlayer()
-		if okSoHead then
-			bruh = bounceTowardsNearestPlayer()
-			if bruh then
-				print(bruh.x, bruh.y, bruh.z)
-			end
-		end
-	else 
-		print("This broke :(")
-	end
+	lookStatus = lookAtNearestPlayer()
+	bounceStatus = bounceTowardsNearestPlayer()
 	wait(3)
 end
