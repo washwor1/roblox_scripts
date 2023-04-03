@@ -1,2 +1,2 @@
 # roblox_scripts
-Random scripts that i've created in the process of learning how to use roblox studio.
+Collection of scripts that i've created for use in roblox studio.
